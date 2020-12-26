@@ -14,7 +14,8 @@ from linebot.exceptions import (
 )
 from linebot.models import (
     MessageEvent, TextMessage, PostbackTemplateAction, PostbackEvent, PostbackAction, QuickReplyButton, QuickReply,
-    FlexSendMessage, BubbleContainer, CarouselContainer, TextSendMessage,ImageSendMessage
+    FlexSendMessage, BubbleContainer, CarouselContainer, TextSendMessage,ImageSendMessage,
+    TemplateSendMessage, CarouselTemplate, CarouselColumn,
 )
 
 
@@ -50,7 +51,7 @@ def handle_message(event):
     if (event.message.text == "おみくじ" or event.message.text == "おみくじをひく"):
 
         omikuji(event)
-        
+
         """
         image_link, lucky_text = make_mikuji.get_mikuji()
         line_bot_api.reply_message(
@@ -71,7 +72,7 @@ def handle_message(event):
 
 def omikuji(event):
     '''
-    
+
     from jinja2 import Environment, FileSystemLoader, select_autoescape
     template_env = Environment(
         loader=FileSystemLoader('py-linebot/templates'),
@@ -88,14 +89,14 @@ def omikuji(event):
             contents=CarouselContainer.new_from_json_dict(json.loads(data))
         )
     )
-    
+
     '''
     from jinja2 import Environment, FileSystemLoader, select_autoescape
     template_env = Environment(
         loader=FileSystemLoader('py-linebot/templates'),
         autoescape=select_autoescape(['html', 'xml', 'json'])
     )
-    
+
     #初期化
     park = "park"
     genre = "genre"
@@ -116,24 +117,33 @@ def omikuji(event):
             )
     '''
 
+    notes = [CarouseColumn(thumbnail_image_url="https://hackathon-engineer-omikuji.herokuapp.com/static/mikuji/base.jpg",
+    title="おみくじ結果",
+    text="結果表示",
+    actions=[{"type": "message","label":"サイトURL","text":"https://hackathon-engineer-omikuji.herokuapp.com/"}])]
+
     line_bot_api.reply_message(
     event.reply_token,
-    FlexSendMessage(
+    TemplateSendMessage(
         alt_text="結果表示",
-        contents=BubbleContainer.new_from_json_dict(json.loads(data))
+        template = CarouselTemplate(columns=notes),
+    ),
+#    FlexSendMessage(
+ #       alt_text="結果表示",
+  #      contents=BubbleContainer.new_from_json_dict(json.loads(data))
+  #  )
     )
-    ) 
 
 
-    
-    
+
+
     '''
     line_bot_api.reply_message(
             event.reply_token,
             FlexSendMessage(contents=container_obj)
         )
     '''
-    
+
 
     '''
     text=dic()
@@ -145,12 +155,12 @@ def omikuji(event):
     path = os.getcwd()
     files = os.listdir(path)
     print(type(files))  # <class 'list'>
-    print(files) 
+    print(files)
 
     #image_path = "base.jpg"
     #comment='test'
 
-    
+
     line_bot_api.reply_message(
         event.reply_token,
         [
@@ -167,7 +177,7 @@ def omikuji(event):
     )
     '''
 
-    
+
 
 
 
