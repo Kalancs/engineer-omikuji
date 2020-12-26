@@ -117,7 +117,7 @@ def omikuji(event):
             )
     '''
 
-    notes = [CarouseColumn(thumbnail_image_url="https://hackathon-engineer-omikuji.herokuapp.com/static/mikuji/base.jpg",
+    notes = [CarouselColumn(thumbnail_image_url="https://hackathon-engineer-omikuji.herokuapp.com/static/mikuji/base.jpg",
     title="おみくじ結果",
     text="結果表示",
     actions=[{"type": "message","label":"サイトURL","text":"https://hackathon-engineer-omikuji.herokuapp.com/"}])]
